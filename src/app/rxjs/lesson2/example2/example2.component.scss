@@ -1,0 +1,22 @@
+@import '../../../../assets/mixins.scss';
+
+.example-2{
+    display: flex;
+    justify-content: space-evenly;
+
+    .subject{
+        text-align: center;
+    }
+}
+
+.color-example{
+    @include card();
+    margin: 16px auto;
+    height: 64px;
+    width: 64px;
+    display: flex;
+
+    p{
+        margin: auto;
+    }
+}

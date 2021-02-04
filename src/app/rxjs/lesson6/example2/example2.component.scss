@@ -1,0 +1,21 @@
+@import '../../../../assets/mixins.scss';
+
+.color-example{
+    @include card();
+    height: 96px;
+    width: 96px;
+    display: flex;
+
+    p{
+        margin: auto;
+    }
+}
+
+.color-container{
+    display: flex;
+    justify-content: space-evenly;
+
+    &:not(:last-child){
+        margin-bottom: 24px;
+    }
+}

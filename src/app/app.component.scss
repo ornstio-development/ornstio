@@ -1,0 +1,49 @@
+@import '../assets/mixins.scss';
+
+.root{
+    display: flex;
+    flex-direction: column;
+}
+
+.header{
+    min-height: 64px;
+    background: $primary;
+    color: white;
+    display: flex;
+    box-shadow: $box-shadow;
+
+    i{
+        margin: auto 16px;
+        font-size: 36px;
+        cursor: pointer;
+        &:hover{
+            color: rgba(white,0.85);
+        }
+    }
+
+    h1{
+        line-height: 36px;
+        height:36px;
+        font-size: 36px;
+        margin: auto;
+    }
+}
+
+.main{
+    flex: 1;
+    display: flex;
+    overflow: hidden;
+    
+    app-side-menu{
+        box-shadow: $box-shadow;
+        min-width: 400px;
+    }
+
+    .content{
+        display: flex;
+        flex: 1;
+        overflow-y: scroll;
+        overflow-x: hidden;
+        padding: 24px 0;
+    }
+}

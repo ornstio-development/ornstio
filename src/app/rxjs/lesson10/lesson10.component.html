@@ -1,0 +1,39 @@
+<h2>Variety is the spice of life</h2>
+<p>In the past 9 lessons, we've covered the majority of the common operators and objects that RxJS provides. In this
+  lesson, we will be covering some useful functions.</p>
+<p>One potentially unfortunate, but intended and largely useful, side effect of using an observable is that any time a
+  value is sent to the subject, all attached observables listening to that subject will emit the results <i>whether it
+    has changed or not.</i> But if we are sending the same value to an observable again and again, we may have a lot of
+  unnecessary business logic slowing down our application. In this instance, what we really want is to only emit a value
+  when the value of the subject has changed. To achieve this efficiently, we can use the <b>distinctUntilChanged</b>
+  operator.</p>
+<app-example1></app-example1>
+<p>And here's the code:</p>
+<app-code-snippet [lessonType]="'rxjs'" [fileType]="'component'" [lesson]="10" [example]="1" [ts]="true" [scss]="true"
+  [html]="true"></app-code-snippet>
+<p>In the above example, clicking on the left-most color tile will emit the current value of the subject, which will
+  cause our first subscription to emit a value. Because our second subscription has <b>distinctUntilChanged</b> piped
+  in,
+  the second observable <i>will not</i> emit a value, because the value has not changed. Clicking on the right-most
+  color tile will send a new color to our subject, meaning our first subscription will emit, as well as our second. We
+  can
+  see this reflected by both the counter in the color tiles themselves, as well as the message below the tiles.</p>
+<p>Many times we will make a request to an API to get the latest data for an object that already exists in our client
+  memory. However, these two objects, even though they reference the same database objects, are distinct objects as far
+  as Javascript is concerned. In this case, what we really want to do is check whether or not a particular property on
+  the value of our subject has changed, not the subject itself.</p>
+<app-example2></app-example2>
+<p>And here's the code:</p>
+<app-code-snippet [lessonType]="'rxjs'" [fileType]="'component'" [lesson]="10" [example]="2" [ts]="true" [scss]="true"
+  [html]="true"></app-code-snippet>
+<p>This example differs from the first in a couple ways. Clicking on the left-most and middle tiles will have the same
+  effect as example 1. We have added a third subscription with <b>distinctUntilKeyChanged</b> piped into it.
+  <b>distinctUntilChanged</b> says <i>if the object itself changes, meaning a new object was assigned to its reference,
+    I
+    will emit my value</i>. <b>distinctUntilKeyChanged</b> says <i>I don't care if the object changed, I will be looking
+    for changes to a specific property on any object you pass to me</i>.
+  We achieve this visual by having our nextColor() function always maintain the same hue as the subject value, and if we
+  pass null to our change() function, then we construct a new color with the same saturation and luminosity, but an
+  incremented hue.
+</p>
+<app-lesson-footer [lessonType]="'rxjs'" [lesson]="10"></app-lesson-footer>

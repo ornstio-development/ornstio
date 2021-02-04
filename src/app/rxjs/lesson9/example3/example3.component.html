@@ -1,0 +1,13 @@
+
+<h4>First Colors</h4>
+<div class="color-container">
+  <div class="color-example" *ngFor="let c of firstColors" [ngStyle]="{background: c?.hex, color: c?.foreground}">
+    <p>{{c?.hex}}</p>
+  </div>
+</div>
+<h4>Second Colors</h4>
+<div class="color-container">
+  <div class="color-example" *ngFor="let c of secondColors" [ngStyle]="{background: c?.hex, color: c?.foreground}">
+    <p>{{c?.hex}}</p>
+  </div>
+</div>

@@ -1,0 +1,14 @@
+<div class="example-2">
+  <div class="subject">
+    <div>Subject</div>
+    <div class="color-example" *ngFor="let color of subjectColors" [ngStyle]="{background: color}">
+      <p>{{color}}</p>
+    </div>
+  </div>
+  <div class="subject">
+    <div>Behavior Subject</div>
+    <div class="color-example" *ngFor="let color of behaviorSubjectColors" [ngStyle]="{background: color}">
+      <p>{{color}}</p>
+    </div>
+  </div>
+</div>

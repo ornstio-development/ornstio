@@ -1,0 +1,13 @@
+@import '../../../../../assets/mixins.scss';
+
+.color-example{
+    @include card();
+    margin: auto;
+    height: 96px;
+    width: 96px;
+    display: flex;
+
+    p{
+        margin: auto;
+    }
+}

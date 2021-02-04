@@ -1,0 +1,13 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<div class="root">
+  <div class="header">
+    <i class="pi pi-bars" (click)="menuOpen = !menuOpen"></i>
+    <h1>Ornstio</h1>
+  </div>
+  <div class="main">
+    <app-side-menu [@flyInOutLeft] *ngIf="menuOpen"></app-side-menu>
+    <div class="content">
+        <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>

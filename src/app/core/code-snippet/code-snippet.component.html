@@ -1,0 +1,26 @@
+<p-tabView *ngIf="loaded">
+  <p-tabPanel header="TS" *ngIf="ts">
+    <ng-template pTemplate="header">
+      <div class="tab-header">
+        <p>TS</p><i ngxClipboard [cbContent]="rawTs" class="pi pi-copy"></i>
+      </div>
+    </ng-template>
+    <pre><code class="lang-typescript" #ts></code></pre>
+  </p-tabPanel>
+  <p-tabPanel *ngIf="html">
+    <ng-template pTemplate="header">
+      <div class="tab-header">
+        <p>HTML</p><i ngxClipboard [cbContent]="rawHtml" class="pi pi-copy"></i>
+      </div>
+    </ng-template>
+    <pre><code class="lang-html" #html></code></pre>
+  </p-tabPanel>
+  <p-tabPanel header="SCSS" *ngIf="scss">
+    <ng-template pTemplate="header">
+      <div class="tab-header">
+        <p>SCSS</p><i ngxClipboard [cbContent]="rawScss" class="pi pi-copy"></i>
+      </div>
+    </ng-template>
+    <pre><code class="lang-scss" #scss></code></pre>
+  </p-tabPanel>
+</p-tabView>

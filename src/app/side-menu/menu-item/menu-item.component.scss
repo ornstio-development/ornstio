@@ -1,0 +1,32 @@
+@import '../../../assets/mixins.scss';
+
+.menu-item{
+    flex: 1;
+    display: flex;
+    padding: 8px;
+    cursor: pointer;
+    i{
+        min-width: 22px;
+    }
+    p{
+        margin: auto 0 auto 8px;
+    }
+
+    width: 100%;
+
+    &:not(:last-child), &:first-child {
+        border-bottom: 1px solid rgba($primary, 0.15);
+    }
+
+    &.active {
+        background: rgba($primary, 0.05);
+    }
+}
+
+.menu-item:hover{
+    background: rgba($primary,0.05);
+}
+
+app-menu-item{
+    width: 100%;
+}

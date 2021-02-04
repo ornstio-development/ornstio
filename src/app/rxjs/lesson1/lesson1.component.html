@@ -1,0 +1,43 @@
+<h2>Watson, recount your observation</h2>
+<p>So what the hell is an observable? An observable is a simplistic name for an <i>asynchronous data stream</i>. And
+  what exactly does this mean? Well, Sherlock, let's break it down.</p>
+<ul>
+  <li><i>Asynchronous:</i> Asynchronous functions operate outside of the main thread, meaning we're no longer linear
+    like most code. Instead, we have to wait for the results to become available. </li>
+  <li><i>Data:</i> Data is data. If you can build it in Angular as an object, it can be passed as data. This includes
+    numbers, arrays, complex objects, functions, anything.</li>
+  <li><i>Stream:</i> Stream is a fancy way of saying "I have all my data, just not right now". The data becomes
+    available as it becomes available, which is like saying "When I know, you'll know." </li>
+</ul>
+<p>So with these definitions, we can come up with the definition of an observable: <b>an observable is a way of handling
+    data as it becomes available.</b> In layman's terms, we can <i>observe</i> it. Well, definitions are all well and
+  good, but let's see an observable in action. In this example, we will loop through an array of colors at different
+  random time intervals (maximum 5 seconds) and pass the hex code as the data aspect of the observable. We will consume
+  the data from the observable through the <i>subscribe</i> function, which essentially means "listen for changes". An
+  important thing to note about observables is that they are not the value you are trying to read. An observable
+  facilitates retrieving this value. For now, and for the rest of the lesson, put the <b>behaviorSubject</b> and the <b>destroy</b>
+  variables in the back of your mind (we cover them in the next two lessons):</p>
+<app-example1></app-example1>
+<p>And here's the code.</p>
+<app-code-snippet [lessonType]="'rxjs'" [ts]="true" [scss]="true" [html]="true" [lesson]="1" [example]="1" [fileType]="'component'">
+</app-code-snippet>
+<p>Still, you could achieve this same result with a lot less code and a lot cleaner implementation. So why are
+  observables useful? Well, when we combine an observable with an injectable service, we get an object that can pass
+  data between components without using cumbersome inputs and outputs. In the example below
+  we have two components, one with a button that will send a new color to our observable via an injected service, and
+  another component that receives the stream of colors outputted by the observable via the same singleton.
+</p>
+<div class="color-example-2">
+  <app-example2-1></app-example2-1>
+  <i class="pi pi-arrow-right"></i>
+  <app-example2-2></app-example2-2>
+</div>
+<p>And here's the code:</p>
+<app-code-snippet [lessonType]="'rxjs'" [lesson]="1" [example]="2" [fileType]="'service'" [ts]="true"></app-code-snippet>
+<app-code-snippet [lessonType]="'rxjs'" [lesson]="1" [example]="2" [subLesson]="1" [fileType]="'component'" [ts]="true" [scss]="true"
+  [html]="true"></app-code-snippet>
+<app-code-snippet [lessonType]="'rxjs'" [lesson]="1" [example]="2" [subLesson]="2" [fileType]="'component'" [ts]="true" [scss]="true"
+  [html]="true"></app-code-snippet>
+<p>And there we have it. Two separate components communicating via an injected service without any cumbersome inputs and
+  outputs directed through a host component. This is just the smallest portion of the power of observables. In our next lesson, we will discover where our magical observable receives the value that it shouts from the rooftops.</p>
+<app-lesson-footer [lessonType]="'rxjs'" [lesson]="1"></app-lesson-footer>

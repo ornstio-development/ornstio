@@ -1,0 +1,15 @@
+.tab-header{
+    display: flex;
+    i{
+        font-size: 20px;
+    }
+
+    p{
+        font-size: 14px;
+        margin-right: 8px;
+    }
+}
+
+:host /deep/ pre{
+    overflow: auto;
+}

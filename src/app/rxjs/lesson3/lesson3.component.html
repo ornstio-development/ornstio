@@ -1,0 +1,59 @@
+<h2>Why create when you can destroy?</h2>
+
+<p>Where there are creators, there must also be destroyers. If you need proof of this, watch Full Metal Alchemist:
+  Brotherhood. But why on earth would I want to destroy this beautiful when I'm done with it. The answer is simple:
+  <b>memory leaks</b>. You see, JavaScript is one jealous bastard. Once JavaScript has something in the grips of its
+  memory, it
+  <i>really</i> doesn't want to let it go. This is even more true when we introduce Single Page Applications (hint hint,
+  nudge nudge, that's what Angular is). Everytime you route, use ngIf, use a ComponentFactoryResolver to dynamically add
+  and remove components, you are wiping the DOM of specific elements. However, if these DOM elements have data stored in
+  memory still (another hint hint, nudge nudge, an active subscription), then JavaScript says "Woah there buddy, I'm
+  still using that." And it holds onto that memory. Even though you'll never reference again. And it will do it over and
+  over, again and again, until Chrome finally gives you this beautiful message:</p>
+<div class="image-container">
+  <img height="294.5px" width="506px" src="./assets/images/aw_snap.png">
+</div>
+<p>So the question becomes: How do we prevent this abomination from happening? Of course, we have to
+  <i>unsubscribe</i>.Before we discuss unsubscribing, we must first discuss the subscription? Well, think in terms of
+  magazines. You sign
+  up
+  for some Fitness magazine for your New Year's Resolution, thinking you'll finally get in shape. But, after a month,
+  your back to your Cheeto chair,
+  and that magazine is nothing but recycling. However, unless you cancel it, that magazine is going to keep coming
+  whether you want it or not. The same
+  is true for subscribing to an observable. When you subscribe to an observable, you are listening to the values it is
+  emitting until you tell it to stop. If you don't tell it to stop, then those magazines will keep flooding your door
+  step until
+  you're drowning in glossy print (memory leak).
+</p>
+<p>In <a [routerLink]="['/rxjs','1']">Lesson 1</a> and <a [routerLink]="['/rxjs','2']">Lesson 2</a>, you saw this little
+  line of code on each and every observable before we subscribed to it:</p>
+<pre><code class="lang-typescript" [innerHTML]="takeUntilCode"></code></pre>
+<p>And these little lines:</p>
+<pre><code class="lang-typescript" [innerHTML]="onDestroyCode"></code></pre>
+<p>These two blocks of code are what prevent us from leaking memory all over the place. Let's explore what they do.</p>
+<ul>
+  <li><i>takeUntil:</i> The takeUntil operator provided by the RxJS library allows us to say "I want to keep
+    subscribing to this observable <i>until</i> the value I've passed into takeUntil (in this instance
+    <i>this.destroy</i> emits a value.
+  </li>
+  <li>
+    <i>ngOnDestroy:</i> ngOnDestroy is a <a href="https://angular.io/guide/lifecycle-hooks" target="_blank">Lifecycle Hook</a> that
+    fires immediately before the component is destroyed.
+  </li>
+</ul>
+<p>In the below example, we will subscribe to 3 observables emitting three different colors, piping in the
+  <i>takeUntil</i> operator to all three. There's no good way to show that the ngOnDestroy component fires (without
+  destroying this whole page), so instead, I've added a button that runs <i>this.destroy.next()</i>. When you press the
+  button, you'll see that all 3 colors stop changing.</p>
+<app-example1></app-example1>
+<p>And here's the code:</p>
+<app-code-snippet [lessonType]="'rxjs'" [fileType]="'component'" [lesson]="3" [example]="1" [ts]="true" [html]="true" [scss]="true"></app-code-snippet>
+<p>The implementation in the code above leverages these two definitions to clean up any memory leaks before they
+  become a problem. By passing <i>this.destroy</i> into our takeUntil function, we are telling our subscription to keep
+  listening for values emitted from the observable <i>until</i> this.destroy emits a value. By calling
+  <i>this.destroy.next()</i> before our calling component is destroyed, we ensure that we cancel all of our magazine
+  subscriptions before we burn the house down. Otherwise that glossy print just smolders on the ashes and keeps the
+  flame burning. Then, since <i>this.destroy</i> itself is a subscription, we have to unsubscribe from it as well. After
+  we've cleaned up, it is now safe to burn our house down.</p>
+  <app-lesson-footer [lessonType]="'rxjs'" [lesson]="3"></app-lesson-footer>

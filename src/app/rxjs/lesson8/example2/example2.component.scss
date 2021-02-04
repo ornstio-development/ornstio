@@ -1,0 +1,23 @@
+@import '../../../../assets/mixins.scss';
+
+.number-example{
+    @include card();
+    background: $accent;
+    color: white;
+    font-weight: 700;
+    margin: 16px 16px 16px 0;
+    height: 96px;
+    width: 96px;
+    display: flex;
+    user-select: none;
+    cursor: pointer;
+    p{
+        margin: auto;
+    }
+}
+
+.number-container{
+    flex-wrap: wrap;
+    display: flex;
+    justify-content: space-evenly;
+}

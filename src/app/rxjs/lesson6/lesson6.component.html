@@ -1,0 +1,47 @@
+<h2>You are tearing me apart, Lisa!</h2>
+<p>We won't be tearing any Lisas apart in this lesson, but rather bringing observables together. Everyone at some point
+  in their RxJS lifetime has been guilty of the nested observable. You know the one I'm talking about:</p>
+<pre><code class="lang-typescript" [innerHTML]="nestedCode"></code></pre>
+<p>If you're guilty of this (and you know you are, everyone is), I want you to slap yourself very softly in reprimand.
+  There's got to be a better way! Well, of course there is. And, depending on your use case, there are actually multiple
+  different ways. In this lesson, we will be covering the usage of two of my favorite and most-used operators:
+  <b>forkJoin</b> and <b>flatMap</b>.</p>
+<p>In this first example we will be covering <i>forkJoin</i>. The name is actually very self explantory: a fork is a
+  division of a single entity into multiple entities (or the opposite of a spoon), and a join is bringing those entities
+  together. Put them together and we get multiple entities coming together into a single entity again (still not a
+  spoon).
+  And there we have a rough definition of the forkJoin operator. In reality, the forkJoin operator combines multiple
+  observables into a single observable that will emit the results of all the observables only once all the observables
+  are complete. Let's think in terms of, you guessed it, colors. Colors (for the most part) can be broken up into 3
+  disparate values: red, green, and blue. However, by joining these three different shades and tints of color, we come
+  up with an entirely different color, as demonstrated by the example below:
+</p>
+<app-example1></app-example1>
+<p>And here's the code:</p>
+<app-code-snippet [lessonType]="'rxjs'" [fileType]="'component'" [lesson]="6" [example]="1" [ts]="true" [scss]="true"
+  [html]="true"></app-code-snippet>
+<p>So we've taken three colors and converted them to observables, whose only job is to emit that one color. I have
+  delayed the execution of these observables by different increments to show that only once all three observables have
+  emitted their value will the <i>forkJoin</i> emit a value to its subscription. The <i>forkJoin</i> operator is
+  especially useful when you are making simultaneous HTTP requests.</p>
+<p>But what if I need to wait for the results of the first observable before I can run the second? Well, you have to use
+  the nested observable:</p>
+<pre><code class="lang-typescript" [innerHTML]="nestedCode"></code></pre>
+<p>Kidding. <b>Please don't ever use the above lines of code.</b> It's hard to read and just plain lazy. If you find
+  yourself
+  in a situation where you need to use the emission of the first observable in your second subscription, use
+  <b>flatMap</b>.</p>
+<p>The <i>flatMap</i> operator is one of those operators that I don't know how I lived without. I use it constantly. In
+  the below example, we will generate a single color by passing a red, green, and blue value down the pipe:</p>
+<app-example2></app-example2>
+<p>And here's the code:</p>
+<app-code-snippet [lessonType]="'rxjs'" [fileType]="'component'" [lesson]="6" [example]="2" [ts]="true" [scss]="true"
+  [html]="true"></app-code-snippet>
+<p>In this example, we are using flatmap to chain the observables into a readable format. In the <i>begin()</i>
+  function, we kick off the chain by first subscribing to <i>red$</i>. Once we have an output from <i>red$</i>, we use
+  <b>flatMap</b> to consume to the output of <i>red$</i> and return a new color, <i>redGreen</i>. Now that we have
+  <i>redGreen</i>, we flatMap in <i>blue$</i>, and use the emission of <i>blue$</i> to create out final, combined color,
+  <i>redGreenBlue</i>. Finally, we subscribe to the final emission, which is <i>redGreenBlue</i>. This is particularly
+  useful when using RESTful APIs, as you can retrieve the parent entity and build relationships on the front end rather
+  than bogging down your database with cumbersome, non-performant joins.</p>
+<app-lesson-footer [lessonType]="'rxjs'" [lesson]="6"></app-lesson-footer>

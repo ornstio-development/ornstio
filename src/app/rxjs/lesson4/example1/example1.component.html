@@ -1,0 +1,6 @@
+<div class="color-example" [ngStyle]="{background: color}">
+  <p>{{color}}</p>
+</div>
+<div class="button-container">
+  <p-button [label]="seizureEnabled ? 'Stop Seizure' : 'Begin Seizure'" (click)="seizureEnabled = !seizureEnabled"></p-button>
+</div>

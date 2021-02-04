@@ -1,0 +1,38 @@
+<h2>Could you repeat that?</h2>
+<p>As developer', we are always looking ahead: what's the latest technology, when's that next patch, who will be the
+  next president? Our field is one of the few where new methods are <i>usually</i> better. However, it is sometimes
+  useful to see the path that others had carved out before us. The same can be true for some of the variables we use in
+  our code. In the below example, we are going to be tracking the previous value of our observable by assigning the
+  current value of our subject to a component variable before assigning our new emission.</p>
+<app-example1></app-example1>
+<p>And here's the code:</p>
+<app-code-snippet [lessonType]="'rxjs'" [fileType]="'component'" [lesson]="9" [example]="1" [ts]="true" [scss]="true"
+  [html]="true"></app-code-snippet>
+<p>As always, RxJS has predicted our predicament, and created a handy little function called <b>pairwise</b>, which does
+  exactly what we just implemented, but in a much better way. When pairwise is piped in, it emits the value of the
+  subject <i>before</i> next() was called, as well as the value passed into next(). Let's see it in action:</p>
+<app-example2></app-example2>
+<p>And here's the code:</p>
+<app-code-snippet [lessonType]="'rxjs'" [fileType]="'component'" [lesson]="9" [example]="2" [ts]="true" [scss]="true"
+  [html]="true"></app-code-snippet>
+<p>You will notice some minor differences between the implementations of Example 1 and Example 2. In Example 1, we
+  initiate our subject with a color, but in Example 2 we initiate it with null. Then, after our subscription, we call
+  next() on our subject to pass in our first random color. This is because <i>pairwise</i> will only emit when the
+  observable can emit 2 values. If only 1 value is ever emitted from the observable, our pairwise subscription will
+  never emit a value.</p>
+<p>Currently, if you need more than the last two values emitted, there is not a great solution. A <b>ReplaySubject</b>
+  will emit the last <i>n</i> values to new subscribers, but there is not a good way to have the ReplaySubject emit all
+  of it's previous <i>n</i> values at once (at least not that I've found). The following is an example of how a
+  ReplaySubject works:</p>
+<app-example3></app-example3>
+<p>And here's the code:</p>
+<app-code-snippet [lessonType]="'rxjs'" [fileType]="'component'" [lesson]="9" [example]="3" [ts]="true" [scss]="true"
+  [html]="true"></app-code-snippet>
+<p>The ReplaySubject is constructed with an <i>n</i> sized buffer, which basically means that the last <i>n</i> items
+  will be emitted to any new subscription. In our example, our buffer size is 3. Looking at the code, we next() three
+  values to the ReplaySubject, then initiate our first subscription to the observable created from our ReplaySubject. On
+  subscribing, the ReplaySubject emits three values, which we push into our firstColors array. Then we next() two more
+  colors into the ReplaySubject and subscribe again. Our secondColors array then gets the last three colors from the
+  ReplaySubject, and our firstColors gets these colors as well.
+</p>
+<app-lesson-footer [lessonType]="'rxjs'" [lesson]="9"></app-lesson-footer>

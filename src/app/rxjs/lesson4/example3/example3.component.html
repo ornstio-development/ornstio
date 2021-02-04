@@ -1,0 +1,12 @@
+<div class="ui-inputgroup">
+  <span class="ui-inputgroup-addon"><i class="fa fa-search"></i></span>
+  <input type="text" pInputText [(ngModel)]="searchCriteria" (ngModelChange)="search(searchCriteria)" placeholder="Search">         
+</div>
+<div class="list">
+  <div class="list-item" *ngFor="let color of filteredColors">
+    {{color}}
+  </div>
+</div>
+<div class="totals">
+  Total: {{filteredColors.length}}
+</div>

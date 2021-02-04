@@ -1,0 +1,17 @@
+@import '../../../../assets/mixins.scss';
+
+.color-example{
+    @include card();
+    margin: 16px auto;
+    height: 196px;
+    width: 196px;
+    display: flex;
+    user-select: none;
+    p{
+        margin: auto;
+    }
+
+    &:first-child{
+        cursor: pointer;
+    }
+}

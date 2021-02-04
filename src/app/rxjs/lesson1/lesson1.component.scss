@@ -1,0 +1,33 @@
+@import '../../../assets/mixins.scss';
+
+.color-example{
+    @include card();
+    margin: 16px auto;
+    height: 196px;
+    width: 196px;
+    display: flex;
+
+    p{
+        margin: auto;
+    }
+}
+
+app-code-snippet{
+    margin: 16px auto;
+}
+
+.color-example-2{
+    display: flex;
+    justify-content: space-evenly;
+
+    app-example2-1,app-example2-2{
+        height: 196px;
+        width: 196px;
+        display: flex;
+    }
+
+    .pi{
+        font-size: 36px;
+        margin: auto 0;
+    }
+}

@@ -1,0 +1,38 @@
+<h2>Slow down there, buckaroo</h2>
+<p>In <a [routerLink]="['/rxjs','3']">Lesson 3</a>, you may have noticed the use a piped function that we have not
+  covered yet: <i>debounceTime</i>. Why would we use a function that would purposefully slow down code? The example
+  below is a prime reason (Do NOT click the button if you are prone to light induced seizures):</p>
+<app-example1></app-example1>
+<p>And here's the code:</p>
+<app-code-snippet [lessonType]="'rxjs'" [fileType]="'component'" [lesson]="4" [example]="1" [ts]="true" [scss]="true"
+  [html]="true"></app-code-snippet>
+<p>Obviously, this is a ridiculous example, but drives the point home. Sometimes, slower is better. Did you notice this
+  lesson's component loaded slower than the rest of the lessons? Let's look at a real
+  example of when instant observables will be detrimental to the performance of our application (e.g., this lesson's
+  component): searching a large
+  amount of data.</p>
+<app-example2></app-example2>
+<p>And here's the code:</p>
+<app-code-snippet [lessonType]="'rxjs'" [fileType]="'component'" [lesson]="4" [example]="2" [ts]="true" [scss]="true"
+  [html]="true"></app-code-snippet>
+<p>In the above example, we have a list of 1,000 random HEX codes in a list. Every single time we change the value of
+  our search, our DOM has to repaint, and we see a massive performance decrease with horrible little console warnings
+  like:</p>
+<div class="image-container">
+  <img height="343px" width="828px" src="./assets/images/performance_decrease.png">
+</div>
+<p>These disgusting little warnings are basically your browser's way of politely telling you that you're non-performant
+  (e.g. you suck). I don't like being bad at things, so how can we improve this? Well, the smart thing to do? Paginate
+  your list. But we're not that smart yet, so instead, we're going to slow down our observable piping in the
+  <b>debounceTime</b> operator to wait a predefined amount of time, <i>then</i> we're going to update our list:</p>
+<app-example3></app-example3>
+<p>And heres the code:</p>
+<app-code-snippet [lessonType]="'rxjs'" [fileType]="'component'" [lesson]="4" [example]="3" [ts]="true" [scss]="true"
+  [html]="true"></app-code-snippet>
+<p>So what did we just do? Well, by using <b>debounceTime</b>, we told the observable that he can only emit a response
+  250ms after the previous response. In short, I can call <i>subject.next()</i> as many times as I want; the observable
+  is only going to emit a result 250ms after the first emitted value. So, I can type for 250ms (roughly the time it
+  takes to type a short word), and the DOM isn't going to try to keep up with my typing. And you can see the difference
+  between Example 1 and Example 2. You will not be able to get around the DOM lag of trying to create 5000 elements at
+  once without some sort of virtual scrolling module or chunking of the array, but the performance difference is vast nonetheless.</p>
+  <app-lesson-footer [lessonType]="'rxjs'" [lesson]="4"></app-lesson-footer>

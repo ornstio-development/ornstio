@@ -1,0 +1,18 @@
+<div class="color-container">
+  <div class="color-example" [ngStyle]="{background: red?.hex, color: red?.foreground}">
+    <p>{{red?.hex}}</p>
+  </div>
+</div>
+<div class="color-container">
+  <div class="color-example" [ngStyle]="{background: green?.hex, color: green?.foreground}">
+    <p>{{green?.hex}}</p>
+  </div>
+</div>
+<div class="color-container">
+  <div class="color-example" [ngStyle]="{background: blue?.hex, color: blue?.foreground}">
+    <p>{{blue?.hex}}</p>
+  </div>
+</div>
+<div class="color-container">
+  <p-button label="Begin" (click)="begin()"></p-button>
+</div>

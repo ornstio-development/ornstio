@@ -1,0 +1,7 @@
+<div class="menu-item" [ngClass]="{'active': menuItem.active }" (click)="router.navigate(menuItem.route)">
+  <i class="pi" [ngClass]="menuItem.iconClass"></i>
+  <p>{{menuItem.title}}</p>
+</div>
+<div *ngIf="menuItem.active" class="menu-item-children">
+  <app-menu-item *ngFor="let child of menuItem.children" [menuItem]="child"></app-menu-item>
+</div>

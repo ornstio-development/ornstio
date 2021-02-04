@@ -1,0 +1,14 @@
+<div class="color-container">
+  <div class="color-example" (click)="change(subject.value)" [ngStyle]="{background: color?.hex, color: color?.foreground}">
+    <p>All Emissions: {{subjectEmissions}}</p>
+  </div>
+  <div class="color-example" (click)="change(nextColor())" [ngStyle]="{background: color?.hex, color: color?.foreground}">
+    <p>Distinct Emissions: {{distinctSubjectEmissions}}</p>
+  </div>
+  <div class="color-example" (click)="change(null)" [ngStyle]="{background: color?.hex, color: color?.foreground}">
+    <p>Distinct Key Emissions: {{distinctKeySubjectEmissions}}</p>
+  </div>
+</div>
+<div class="color-container">
+  <p class="label-box">{{label}}</p>
+</div>

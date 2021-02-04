@@ -1,0 +1,52 @@
+<h2>A king is only as powerful as his subject</h2>
+<p>In <a [routerLink]="['/rxjs','1']">Lesson 1</a>, we mentioned to ignore the variables named <b>destroy</b> and
+  <b>behaviorSubject</b>.
+  Well, we're not ignoring them any more. In this lesson we will cover the use of subjects and why unsubscribing is
+  vital for performance.</p>
+<p>First, let's talk about subjects. There are two types of subjects we will be covering in this lesson: the standard
+  <b>Subject</b> and the <b>Behavior Subject</b>.</p>
+<ul>
+  <li><i>Subject:</i> A Subject is an object that holds the value for an Observable. Remember that an Observable just
+    emits value to its listeners, it doesn't actually know what it's giving out. The Subject tells the Observable what
+    to tell its listeners.</li>
+  <li><i>Behavior Subject:</i> See <i>Subject</i>.</li>
+</ul>
+<p>Wait, what the hell? They're the same thing? Wrong-o. The primary difference between a Subject and a Behaviour
+  Subject is that a Behavior Subject immediately passes its initial value to the Observable; a Subject has to wait to be
+  told to emit its initial value. So why is this important? Let's take a look.</p>
+<p>In the example below, we have two nearly identical code blocks. The primary difference is that one observable is
+  created from a Subject, the other from a Behavior Subject.
+  Both the Subject and the Behavior Subject are looped through the same array and given the exact same values. The
+  results are in the example below:</p>
+<app-example1></app-example1>
+<p>And the code:</p>
+<app-code-snippet [lessonType]="'rxjs'" [lesson]="2" [example]="1" [fileType]="'component'" [ts]="true" [html]="true" [scss]="true">
+</app-code-snippet>
+<p>So why did we get no output for the Subject, and all the outputs for the Behavior Subject? Because we set the value
+  of the subject before we subscribed to our observable.
+  Due to the fact that Subjects do not emit initial values, and because we are pushing our values inside of that
+  subscription, the observable never receives a value. And since the observable never receives a value, it has no value
+  to emit to us. However, by rearranging where we set the initial value, we get drastically different results:</p>
+<app-example2></app-example2>
+And the code:
+<app-code-snippet [lessonType]="'rxjs'" [lesson]="2" [example]="2" [fileType]="'component'" [ts]="true" [html]="true" [scss]="true">
+</app-code-snippet>
+<p>So what in tarnation happened here? The subject worked great, but now my behavior subject got all messed up? Well
+  let's walk through it. Since the subject does not emit an initial value, we had to give it the initial value
+  <i>after</i> we subscribed to it.
+  This kicked off the recursive loop in the subscription, and everything was peachy-keen. But Behavior Subjects already
+  have initial values, and in our example, that initial value is <i>null</i>
+  So the first color that the observable emitted was <i>null</i>, then red, blue, and finally green. Notice that we
+  added a setTimeout to the subscription to intentionally delay the execution. Otherwise, we get some truly strange
+  results.</p>
+<p>So reviewing these two examples, let's look at one last example with the intended implementation of both the Subject
+  and Behavior Subject:</p>
+<app-example3></app-example3>
+<p>And here's the code:</p>
+<app-code-snippet [lessonType]="'rxjs'" [lesson]="2" [example]="3" [fileType]="'component'" [ts]="true" [html]="true" [scss]="true">
+</app-code-snippet>
+<p>By giving our Behavior Subject a new initial value <i>before</i> subscribing to its observable, and by giving our
+  Subject an
+  initial value <i>after</i> we subscribe to its observable, we get the intended results. And now you know where the
+  magical observable receives the value that it shouts from the rooftops.</p>
+  <app-lesson-footer [lessonType]="'rxjs'" [lesson]="2"></app-lesson-footer>

@@ -1,0 +1,8 @@
+<div *ngFor="let partition of partitions; let i = index;">
+  <p>Less Than {{(i+1)*step}}% Luminosity [{{partition.length}}]</p>
+  <div class="color-container">
+    <div class="color-example" *ngFor="let c of partition" [ngStyle]="{background: c?.hex, color: c?.foreground}">
+      <p>{{c?.hex}}</p>
+    </div>
+  </div>
+</div>

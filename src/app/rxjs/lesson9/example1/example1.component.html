@@ -1,0 +1,6 @@
+<div class="color-example" (click)="next()" [ngStyle]="{ background: color?.hex, color: color?.foreground }">
+  <p>{{color?.hex}}</p>
+</div>
+<div class="color-example" [ngStyle]="{ background: previousColor?.hex, color: previousColor?.foreground }">
+  <p>{{previousColor?.hex}}</p>
+</div>

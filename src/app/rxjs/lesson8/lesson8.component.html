@@ -1,0 +1,40 @@
+<h2>Bring it back now y'all</h2>
+<p>In <a [routerLink]="['/rxjs','6']">Lesson 6</a>, we discussed <i>forkJoin</i> and its various uses. In this lesson,
+    we will be covering a similar function: <b>combineAll</b>.</p>
+<p>As you make have learned, forkJoin only works when the observable can complete. This means that the observable has
+    emitted its final value and the client is no longer subscribing to its emissions. This is extremely useful when we
+    are using the HttpModule to make requests to an API. The results return from whatever web service we are consuming,
+    and the subscription is finished after its first emission. But what if we want to continue listening to any future
+    emissions for a series of observables?</p>
+<p>In this first example, we will use some standards BehaviorSubjects and Observables to achieve what we're looking for.
+    You may also notice that we have switched to numbers for this lesson. I couldn't think of any way to integrate
+    color.</p>
+<app-example1></app-example1>
+<p>And here's the code:</p>
+<app-code-snippet [lessonType]="'rxjs'" [fileType]="'component'" [lesson]="8" [example]="1" [ts]="true" [scss]="true"
+    [html]="true"></app-code-snippet>
+<p>First, we declare our array of subjects and an empty array of numbers. In our ngOnInit function, we than map our
+    subject array to an array of observables and loop through the array of obserables to individually subscribe to each
+    observable. Clicking on a tile will then increment the number for that subject, and the subscription works! So why
+    wouldn't we always do this? In Example 1, the subjects are completely unaware of each other. In many instances, our
+    observables will depend on the values of one another. So what we really want to do is say: <b>when any subject emits
+        a value, emit the values for all other subjects as well</b>. For this, we use <b>combineAll</b>.</p>
+<app-example2></app-example2>
+<p>And here's the code:</p>
+<app-code-snippet [lessonType]="'rxjs'" [fileType]="'component'" [lesson]="8" [example]="2" [ts]="true" [scss]="true"
+    [html]="true"></app-code-snippet>
+<p>In this example, <b>combineAll</b> is used to say <b>emit the latest value of each subject you provided to me</b>.
+    Then, because our subscription is still open, continue listening to changes on all of our subjects at once. When one
+    value is updated, continue emitting the latest value of each subject. Then, in our subscription to the overall
+    observable, we simply assign the array value to our numbers array. The code is much cleaner and more readable, but
+    other than that, we aren't seeing much benefit here. Sure, you're emitting all the values again, but if only one
+    changed, why <i>should</i> you want to emit all these values? Well, what if we wanted to <i>combine</i> (or
+    manipulate) some of these values before the are emitted?</p>
+<app-example3></app-example3>
+<app-code-snippet [lessonType]="'rxjs'" [fileType]="'component'" [lesson]="8" [example]="3" [ts]="true" [scss]="true"
+    [html]="true"></app-code-snippet>
+<p>In Example 3, the number on the left refers to the underlying subject value. Basically, how many times have we
+    clicked a tile? The number on the right is a Pascal-ish calculated value, which equals the sum of all values that
+    appear before it, plus the number of clicks on its own tile. In short, the subject holds the number of times a tile was clicked. 
+    The final emission holds the value of the sum of those clicks.</p>
+<app-lesson-footer [lessonType]="'rxjs'" [lesson]="8"></app-lesson-footer>

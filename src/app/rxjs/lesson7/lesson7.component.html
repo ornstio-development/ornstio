@@ -1,0 +1,46 @@
+<h2>Boom! Crash! The sound of my API!</h2>
+<p>As we learned in <a [routerLink]="['/rxjs','6']">Lesson 6</a>, we can use forkJoin to combine <i>n</i> number of
+  observables together. The problem is that <i>n</i> is an extremely scary number. As developers, we are taught to
+  think in terms of the "worst case scenario", because no matter how we design it, all users are dumb. This isn't
+  disparaging. We, as developers, are probably thought of as dumb by doctors when we go in for a cold and have
+  self-diagnosed
+  ourselves through WebMD with nasal cancer. Our job is to prevent the user's "dumbness" from doing something the
+  software was never
+  intended to do. However, by using forkJoin, we have provided the user with enough rope to...hurt themselves. And we
+  have done this by giving them the ability to flood our API with <i>n</i> number of calls via forkJoin.</p>
+<p>Why is this an issue? Well, let's think about it from a database perspective. If we try to remove 5 records in 5
+  separate requests from a
+  database via a query that also locks those records (e.g. DELETE FROM X WHERE Y = VALUE), then we will have a small
+  deadlock that we will probably never notice. However, if we take those 5 deletions and turn it into 5000 deletions,
+  all of a sudden our SQL Timeout restriction will activate, or our API will bail out due to long response times.</p>
+<p>How can we prevent our users from being dumb (at least when it comes to bringing our database to its knees)? Well, we
+  need to make sure that <i>n</i> is contained while still giving us the simplicity and ease-of-use that forkJoin
+  provides. However, before we step into the full implementation, we must introduce a new operator: <b>mergeMap</b>.</p>
+<app-example1></app-example1>
+<p>And here's the code:</p>
+<app-code-snippet [lessonType]="'rxjs'" [fileType]="'component'" [lesson]="7" [example]="1" [ts]="true" [scss]="true"
+  [html]="true"></app-code-snippet>
+<p><b>mergeMap</b> is an operator that we can use to set the concurrency of observable emissions. In the above example,
+  we have an array of 16 observables filled with random color subjects that are delayed by random time intervals. We
+  then use the <i>from</i> operator to create a
+  single observable from the array, and pipe in <i>mergeMap</i>, using a lambda operator to pass back each observable as
+  it was and set the concurrency to 4, meaning that only 4 observables may emit at any given time. So as the first
+  observable to complete its operation, the fifth observable execution begins, delayed by its random interval, and
+  emits, until all of the observables in the array have emitted their color. The subscription at the end of the
+  <i>mergeMap</i> will then handle each individuals emission. In our example. we push it into our color array.</p>
+<p>You may want to know when all these observables have emitted a result, though. <i>mergeMap</i> is all well and good,
+  but it doesn't tell us when we're done. So what if we combined the <i>mergeMap</i> operator with the fan favorite
+  <i>forkJoin</i>?</p>
+<app-example2></app-example2>
+<p>And here's the code:</p>
+<app-code-snippet [lessonType]="'rxjs'" [fileType]="'component'" [lesson]="7" [example]="2" [ts]="true" [scss]="true"
+  [html]="true"></app-code-snippet>
+<p>In the above example, we use <i>mergeMap</i> to first prevent too many observables from firing at once. We output our
+  results by using the callback() function and piping in a <i>map</i> operator to get the color out of the observable as
+  it emits. We wrap the entire thing inside of a forkJoin, which waits to fire its emission (which we don't care about,
+  since we are handling the individual operations in the callback() function). Once the <i>forkJoin</i> emission fires,
+  we know that all observables inside of our <i>mergeMap</i> are complete, so we can update the label of our button to
+  read "Done". Using this logic, we don't need to worry about murdering our RESTful API with the infamous <i>n</i>. And
+  thus, our backend developers and database administrators don't come knocking on our door with pitchforks and torches
+  to burn us at the stake.</p>
+<app-lesson-footer [lessonType]="'rxjs'" [lesson]="7"></app-lesson-footer>

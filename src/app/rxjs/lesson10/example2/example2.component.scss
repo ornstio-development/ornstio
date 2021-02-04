@@ -1,0 +1,34 @@
+@import '../../../../assets/mixins.scss';
+
+.color-example{
+    @include card();
+    height: 216px;
+    width: 216px;
+    display: flex;
+    user-select: none;
+    cursor: pointer;
+
+    p{
+        margin: auto;
+    }
+}
+
+.color-container{
+    display: flex;
+    justify-content: space-evenly;
+
+    &:not(:last-child){
+        margin-bottom: 16px;
+    }
+}
+
+.color-container:last-child{
+    margin-top: 48px;
+}
+
+.label-box{
+    border: 1px solid rgba(black,0.15);
+    padding: 16px;
+    width: 256px;
+    text-align: center;
+}

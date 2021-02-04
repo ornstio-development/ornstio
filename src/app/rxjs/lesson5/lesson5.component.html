@@ -1,0 +1,35 @@
+<h2>Chains and Manipulation: Don't try this at home</h2>
+<p>A single observable is great on its own. In our previous lessons, we've covered how we can communicate between
+  components via a singleton service and how to use an observable within a single component to optimize DOM performance
+  via a list search. In this lesson, we'll be exploring how we can use the emitted value of a single observable to
+  create a chain reaction of emitted values.</p>
+<p>When would we want to chain observables? Well, in our first example below, we are going to pass in a single HEX
+  string to our subject, whose observable will in turn emit 3 new HEX values from the RGB value of the first color.</p>
+<app-example1></app-example1>
+<p>And here's the code:</p>
+<app-code-snippet [lessonType]="'rxjs'" [fileType]="'component'" [lesson]="5" [example]="1" [ts]="true" [scss]="true"
+  [html]="true"></app-code-snippet>
+<p>And there we have it. The bottom left color is the HEX value of the R value from the top center color. The bottom
+  center color is the G, and the bottom right is the B. Now, this seems pretty overkill. What if we were to instead
+  create a sieve using chained observables?</p>
+<app-example2></app-example2>
+<p>And here's the code:</p>
+<app-code-snippet [lessonType]="'rxjs'" [fileType]="'component'" [lesson]="5" [example]="2" [ts]="true" [scss]="true"
+  [html]="true"></app-code-snippet>
+<p>So in this example, we've created a sieve to filter color based on their luminosity. The <i>colors$</i> observable
+  will emit all possible random colors to the <i>lightsSubject</i>. In turn, the <i>light$</i> subscription will select
+  all the colors with a luminosity greater than 66% and set the <i>lights</i> array. All left over colors then get
+  pushed to the <i>mediumSubject</i>, which follows the same loop, all the way down to the dark. Each observable emits
+  an array less than or equal to the previous emission. However, this code gets pretty bulky, and there's a lot of
+  duplicate work going on here. So how could we improve this code to make it cleaner?</p>
+<app-example3></app-example3>
+<p>And here's the code:</p>
+<app-code-snippet [lessonType]="'rxjs'" [fileType]="'component'" [lesson]="5" [example]="3" [ts]="true" [scss]="true"
+  [html]="true"></app-code-snippet>
+<p>So now we have reduced the code down to a single observable, creating a chain on itself, sifting a smaller and
+  smaller amount of data on each iteration. The purpose of these examples is to demonstrate how an observable can pass
+  its
+  emissions via a subscription to as many other chained observables as it wants, including itself. In the next lesson,
+  we will cover what we do if we have multiple observables that need to run in parallel, or that depend on the results
+  of a previous observable's emission.</p>
+<app-lesson-footer [lessonType]="'rxjs'" [lesson]="5"></app-lesson-footer>

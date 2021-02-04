@@ -1,0 +1,29 @@
+<h2>Give me a minute</h2>
+<p>Time sensitive observables are unique, but can be very useful when you want to capture data every so often. For
+  example, if you only need to know about certain events or action every 10 seconds, you would normally use an interval.
+  Intervals and observables don't exactly play well together, as you're combining two asynchronous functions together,
+  which can yield some strange results. Luckily, RxJS has taken this into account with some fun functions:
+  <b>auditTime</b> and <b>bufferTime</b>.
+</p>
+<p>In this first example, we will only capture the most current data using <b>auditTime</b>.</p>
+<app-example1></app-example1>
+<p>And here's the code:</p>
+<app-code-snippet [lessonType]="'rxjs'" [fileType]="'component'" [lesson]="11" [example]="1" [ts]="true" [scss]="true"
+  [html]="true"></app-code-snippet>
+<p>So we have an interval set to run its function once every second. This interval will update the label on the page
+  with the color we sent to our subject with a timestamp of seconds since initiation. However, even though we are
+  sending new values to our subject, our subscription is set to emit the current value of the subject every 5 seconds
+  using <b>auditTime</b>. Therefore, we can see the differences between the hex value displayed in the color tile and
+  the hex value in the label.</p>
+<p>What if we don't just want to know the latest value of our subject though? What if we want to know all the
+  values that were sent to our subject while we were waiting for our audit to happen? That is where <b>bufferTime</b>
+  comes into play. <b>bufferTime</b> behaves similarly to <b>auditTime</b>, except that it will emit
+  an array of all values sent to our subject while we were waiting for our time interval to pass.</p>
+<app-example2></app-example2>
+<p>And here's the code:</p>
+<app-code-snippet [lessonType]="'rxjs'" [fileType]="'component'" [lesson]="11" [example]="2" [ts]="true" [scss]="true"
+  [html]="true"></app-code-snippet>
+<p>So what bufferTime is doing here is capturing all the values pushed to the subject from the last emission to now. Our
+  interval here is set to emit a new value every 500ms, and our bufferTime will emit a value every 5 seconds. So what we
+  get (and what we can see in the example) is every 5 seconds, we get 10 new colors emitted from our subscription.</p>
+<app-lesson-footer [lessonType]="'rxjs'" [lesson]="11"></app-lesson-footer>
